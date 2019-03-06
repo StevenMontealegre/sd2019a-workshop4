@@ -10,8 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     lb.vm.network :private_network, ip: "192.168.56.101"
     lb.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024","--cpus", "1", "--name", "load_balancer" ]
+    end
     lb.vm.provision "ansible" do |ansible|
-      ansible.playbook = 'lbplaybook.yml'
+      ansible.playbook = 'playbooks/lbplaybook.yml'
       ansible.inventory_path = 'inventory'
     end
   end
@@ -21,21 +22,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ds.vm.network :private_network, ip: "192.168.56.102"
     ds.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024","--cpus", "1", "--name", "consul_server" ]
+    end    
     ds.vm.provision "ansible" do |ansible|
-      ansible.playbook = 'discovery_service.yml'
-      ansible.limit = 'all'
+      ansible.playbook = 'playbooks/discovery_service.yml'
       ansible.inventory_path = 'inventory'
     end
   end
 
-  config.vm.define :micr2oservice_a do |ma|
+  config.vm.define :microservice_a do |ma|
     ma.vm.box = "centos_7"
     ma.vm.network :private_network, ip: "192.168.56.103"
     ma.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024","--cpus", "1", "--name", "microservice_a" ]
+    end
     ma.vm.provision "ansible" do |ansible|
-      ansible.playbook = 'microservice_a.yml'
-      ansible.limit = 'all'
+      ansible.playbook = 'playbooks/microservice_a.yml'
       ansible.inventory_path = 'inventory'
     end
   end
@@ -45,9 +46,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mb.vm.network :private_network, ip: "192.168.56.104"
     mb.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024","--cpus", "1", "--name", "microservice_b" ]
+    end    
     mb.vm.provision "ansible" do |ansible|
-      ansible.playbook = 'microservice_b.yml'
-      ansible.limit = 'all'
+      ansible.playbook = 'playbooks/microservice_b.yml'
       ansible.inventory_path = 'inventory'
     end
   end
