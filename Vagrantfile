@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--memory", "1024","--cpus", "1", "--name", "consul_server" ]
     end    
     ds.vm.provision "ansible" do |ansible|
-      ansible.playbook = 'playbooks/Discovery_Service/discovery_service.yml'
+      ansible.playbook = 'playbooks/discovery_service.yml'
       ansible.inventory_path = 'inventory'
     end
   end
